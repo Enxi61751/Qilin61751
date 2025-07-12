@@ -1,0 +1,439 @@
+
+* {
+    margin: 10;
+    padding: 10;
+    box-sizing: border-box;
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: 
+        linear-gradient(135deg, #73c4e2, #7687de, #c082d8),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="rgba(0,0,0,0.1)"/><path d="M20,20 Q50,5 80,20 T100,50 T80,80 T50,100 T20,80 T0,50 T20,20 Z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+    background-size: cover, 100px 100px;
+    background-blend-mode: multiply;
+    animation: gradientAnimation 15s ease infinite;
+    overflow: hidden;
+    padding: 20px;
+    position: relative;
+}
+
+/* 背景动画 */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 装饰性运动元素 */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="8" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><circle cx="20" cy="20" r="15" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+    z-index: -1;
+}
+
+/* 登录容器 - 玻璃拟态效果 */
+.login-container {
+  max-width: 500px;
+  width: 100%;
+  padding: 3rem 2rem;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 5px 15px rgba(116, 116, 116, 0.591);
+  text-align: center;
+  
+  /* 整个容器下移 */
+  position: relative;
+  top: 20px;
+}
+
+/* 顶部装饰条 - 体育场风格 */
+/*.header-strip {
+    height: 10px;
+    background: linear-gradient(to right, #ff6b6b, #ffd166, #06d6a0, #118ab2);
+    position: relative;
+    overflow: hidden;
+}*/
+
+.header-strip::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="10" viewBox="0 0 20 10"><rect width="10" height="10" fill="rgba(255,255,255,0.3)"/></svg>');
+    animation: stripMove 1s linear infinite;
+}
+
+@keyframes stripMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 0; }
+}
+
+/* 内容区域 */
+.login-content {
+    padding: 60px;
+    text-align: center;
+    position: relative;
+}
+
+/* 欢迎标题 - 增大字体 */
+/*.welcome-title {
+    font-size: 10rem;
+    font-weight: 800;
+    margin-bottom: 100px;
+    background: linear-gradient(to right, #f2a7a7, #f8da94);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    position: relative;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #ff6b6b, #ffd166);
+    border-radius: 3px;
+}*/
+
+/* 登录标题 - 增大字体并居中 */
+.login-title {
+    font-size: 5rem;
+    color: #333;
+    margin: 40px 30px 20px;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* 运动图标装饰 */
+.sports-icons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 30px  35px;
+}
+
+.icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.icon-circle:hover {
+    transform: translateY(-5px);
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.icon-circle i {
+    font-size: 30px;
+    color: #ff6b6b;
+}
+
+
+/* 表单样式 - 增大字体 */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 600px;
+    margin: 100px 100px 100px 100px;
+    
+}
+
+.form-group {
+    position: relative;
+    margin-top: 50px;
+}
+
+/* 标签字体增大 */
+.form-group label {
+    display: block;
+    text-align: left;
+    margin-bottom: 50px;
+    color: #555;
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+.form-input {
+    width: 100%;
+    padding:30px 30px;
+    padding-left: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    color: #333;  
+    font-size: 3rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.form-input:focus {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: #ff8e53;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+}
+
+.form-input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 3rem;
+}
+
+.icon-wrapper {
+    position: absolute;
+    left: 50px;
+    top: 42px;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 3rem;
+}
+
+/* 登录按钮 - 增大字体 */
+.login-btn {
+    background: linear-gradient(to left, #ff6b6b, #ff8e53);
+    color: white;
+    border: none;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 7rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 100px 50px 50px 0;
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 2px;
+    width: 100%;
+    text-align: center;
+   
+}
+
+.login-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+}
+
+.login-btn:active {
+    transform: translateY(1px);
+}
+
+.login-btn::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.login-btn:hover::after {
+    left: 100%;
+}
+
+/* 底部链接区域 - 增大字体 */
+.login-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    color: #666;
+    font-size: 2rem;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.register-link {
+    color: #ff6b6b;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    font-size: 1rem;
+}
+
+.register-link::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #ff6b6b;
+    transition: width 0.3s ease;
+}
+
+.register-link:hover {
+    color: #ff8e53;
+}
+
+.register-link:hover::after {
+    width: 100%;
+}
+
+/* 小红书号样式 - 增大字体 */
+.redbook-id {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    color: #666;
+}
+
+.redbook-id::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, #ff0000, #ff7878);
+    border-radius: 50%;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .login-container {
+        max-width: 100%;
+        transform: translateY(0);
+    }
+    
+    .login-content {
+        padding: 40px 25px;
+    }
+    
+    .welcome-title {
+        font-size: 2.2rem;
+    }
+    
+    .login-title {
+        font-size: 1.8rem;
+        margin: 30px 0 20px;
+    }
+    
+    .sports-icons {
+        gap: 15px;
+        margin: 20px 0 25px;
+    }
+    
+    .icon-circle {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .icon-circle i {
+        font-size: 24px;
+    }
+    
+    .login-form {
+        gap: 20px;
+    }
+    
+    .form-group label {
+        font-size: 1rem;
+    }
+    
+    .form-input {
+        padding: 14px 18px;
+        padding-left: 45px;
+        font-size: 0.95rem;
+    }
+    
+    .icon-wrapper {
+        top: 40px;
+        font-size: 1.1rem;
+        left: 15px;
+    }
+    
+    .login-btn {
+        font-size: 1.1rem;
+        padding: 14px;
+    }
+    
+    .login-footer {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 25px;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-content {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.form-group {
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.login-btn {
+    animation: fadeInUp 0.6s ease-out;
+    animation-delay: 0.4s;
+    animation-fill-mode: both;
+}
+
+/* 新增居中控制 */
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
