@@ -4,7 +4,7 @@ import ActivityContext from '@/context/ActivityContext';
 import ActivityList from '@/components/Activity/ActivityList';
 import ActivitySearch from '@/components/Activity/ActivitySearch';
 import CategoryFilter from '@/pages/CategoryFilter';
-import "@style"; // 添加在顶部
+import "@styles"; // 添加在顶部
 const ActivitiesPage = () => {
   const { currentUser } = useAuth();
   

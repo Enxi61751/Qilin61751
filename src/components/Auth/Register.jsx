@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
-import "@style"; // 添加在顶部
+import "@styles"; // 添加在顶部
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');

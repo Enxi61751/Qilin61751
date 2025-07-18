@@ -1,3 +1,4 @@
+import "@styles"
 const ActivityComments = ({ activityId }) => {
   const [comments, setComments] = useState([]);
   
