@@ -4,7 +4,7 @@ import ActivityContext from '@/context/ActivityContext';
 import ActivityList from '@/components/Activity/ActivityList';
 import ActivitySearch from '@/components/Activity/ActivitySearch';
 import CategoryFilter from '@/pages/CategoryFilter';
-
+import "@style"; // 添加在顶部
 const ActivitiesPage = () => {
   const { currentUser } = useAuth();
   
@@ -124,14 +124,11 @@ const ActivitiesPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* ...保持原有的JSX结构不变 */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">所有活动</h1>
-        <p className="text-gray-600 mt-2">
-          发现适合您的体育活动，加入我们的社区
-        </p>
-      </div>
+    <div className="activities-page container">
+    <div className="page-header">
+      <h1>所有活动</h1>
+      <p>发现适合您的体育活动，加入我们的社区</p>
+    </div>
       
       <div className="flex flex-col md:flex-row gap-6">
         {/* 左侧筛选区 */}

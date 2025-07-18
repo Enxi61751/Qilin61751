@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
-
+import "@style"; // 添加在顶部
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -29,10 +29,14 @@ const Register = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">注册新账号</h2>
-      {error && <div className="mb-4 text-red-500">{error}</div>}
+    <div className="register-page">
+    <div className="register-container card">
+      <div className="register-header">
+        <h2>注册新账号</h2>
+        <p>创建账户，加入我们的社区</p>
+      </div>
       
+      {error && <div className="text-error mb-4">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 mb-2" htmlFor="username">
@@ -98,13 +102,12 @@ const Register = () => {
         </button>
       </form>
       
-      <div className="mt-4 text-center">
-        <span className="text-gray-600">已有账号？</span>
-        <a href="/login" className="text-blue-500 hover:underline">
-          立即登录
-        </a>
+      <div className="text-center mt-6 text-muted">
+        <span>已有账号？</span>
+        <a href="/login" className="text-primary">立即登录</a>
       </div>
     </div>
+  </div>
   );
 };
 

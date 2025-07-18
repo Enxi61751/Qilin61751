@@ -1,3 +1,6 @@
+import { useContext } from 'react';
+import ActivityContext from '@context/ActivityContext';
+import React, { useState } from 'react';
 const ActivitySearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { setFilters } = useContext(ActivityContext);

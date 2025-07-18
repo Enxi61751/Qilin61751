@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
-
+import "@style"; // 添加在顶部
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,9 +22,25 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">登录</h2>
-      {error && <div className="mb-4 text-red-500">{error}</div>}
+    <div className="login-page">
+     <ul className="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+    
+    <div className="login-container">
+      <div className="login-header">
+        <h2>欢迎回来</h2>
+        <p>请登录您的账户继续操作</p>
+      </div>
+      
+      {error && <div className="text-error mb-4">{error}</div>}
       
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -63,13 +79,12 @@ const Login = () => {
         </button>
       </form>
       
-      <div className="mt-4 text-center">
-        <span className="text-gray-600">还没有账号？</span>
-        <a href="/register" className="text-blue-500 hover:underline">
-          立即注册
-        </a>
+      <div className="login-footer">
+        <span>还没有账号？</span>
+        <a href="/register">立即注册</a>
       </div>
     </div>
+  </div>
   );
 };
 
