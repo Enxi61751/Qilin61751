@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import ActivityList from '../components/Activity/ActivityList';
+import ActivitiesPage from './ActivitiesPage';
 const CategoryFilter = ({ currentCategory, onChange }) => {
   const categories = [
     { id: 'all', name: '全部活动' },
@@ -33,7 +35,7 @@ const CategoryFilter = ({ currentCategory, onChange }) => {
     </div>
     <div>
       <Link 
-        to={`/products/${categories.id}`} 
+        to={`/activity/${ActivitiesPage.id}`} 
         className="detail-button"
       >
         查看详情

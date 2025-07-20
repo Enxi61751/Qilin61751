@@ -5,6 +5,7 @@ import ActivityDetail from '@/components/Activity/ActivityDetail';
 import ActivityRegister from '@/components/Activity/ActivityRegister';
 import ActivityComments from '@/components/Activity/ActivityComments';
 import ActivityContext from '@/context/ActivityContext';
+import ActivityList from '../components/Activity/ActivityList';
 
 const ActivityDetailPage = () => {
   const { id } = useParams();

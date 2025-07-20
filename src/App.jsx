@@ -29,7 +29,7 @@ function App() {
             element={currentUser ? <ActivitiesPage /> : <Navigate to="/login" />} 
           />
           <Route 
-            path="/activity" 
+            path="/activity/:id" 
             element={currentUser ? <ActivityDetailPage /> : <Navigate to="/login" />} 
           />
           <Route 
