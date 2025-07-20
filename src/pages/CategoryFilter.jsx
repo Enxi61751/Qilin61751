@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { Link } from 'react-router-dom';
 const CategoryFilter = ({ currentCategory, onChange }) => {
   const categories = [
     { id: 'all', name: '全部活动' },
@@ -16,6 +15,7 @@ const CategoryFilter = ({ currentCategory, onChange }) => {
   ];
 
   return (
+    <>
     <div className="grid grid-cols-2 gap-2">
       {categories.map((category) => (
         <button
@@ -31,6 +31,15 @@ const CategoryFilter = ({ currentCategory, onChange }) => {
         </button>
       ))}
     </div>
+    <div>
+      <Link 
+        to={`/products/${categories.id}`} 
+        className="detail-button"
+      >
+        查看详情
+      </Link>
+    </div>
+    </>
   );
 };
 
