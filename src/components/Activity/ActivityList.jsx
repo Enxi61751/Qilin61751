@@ -1,14 +1,20 @@
 // ActivityList.jsx
 import { useContext } from 'react';
 import ActivityContext from '@context/ActivityContext';
+import {Link} from 'react-router-dom';
 
 const ActivityList = () => {
   const { activities } = useContext(ActivityContext);
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div>
       {activities.map(activity => (
-        <activity key={activity.id} activity={activity} />
+        <div key={activity.id}>
+          <Link to={`/activities/${activity.id}`}>
+            <h3>{activity.title}</h3>
+            {/* 其他内容 */}
+          </Link>
+        </div>
       ))}
     </div>
   );

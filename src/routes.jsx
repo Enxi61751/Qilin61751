@@ -11,7 +11,7 @@ const AppRoutes = () => (
     <Route path="/activities" element={<ActivitiesPage />} />
     <Route path="/orders" element={<OrdersPage />} />
     <Route path="/login" element={<Login />} />
-    <Route path="/activity" element={<ActivityDetailPage />} />
+    <Route path="/activity/:id" element={<ActivityDetailPage />} />
     {/* 其他路由... */}
   </Routes>
 );
