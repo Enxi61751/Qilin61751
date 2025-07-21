@@ -36,6 +36,10 @@ function App() {
             path="/orders" 
             element={currentUser ? <OrdersPage /> : <Navigate to="/login" />} 
           />
+          <Route 
+            path="/activity/:id/orders" 
+            element={currentUser ? <OrdersPage /> : <Navigate to="/login" />} 
+          />
           
           {/* 404处理 */}
           <Route path="*" element={<h1>页面不存在</h1>} />

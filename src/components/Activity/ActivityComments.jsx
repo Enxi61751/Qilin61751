@@ -1,4 +1,5 @@
 import "@styles"
+import { useEffect, useState } from 'react';
 const ActivityComments = ({ activityId }) => {
   const [comments, setComments] = useState([]);
   
@@ -21,7 +22,7 @@ const ActivityComments = ({ activityId }) => {
           </span>
         </div>
       ))}
-      <CommentForm activityId={activityId} />
+      {/*<CommentForm activityId={activityId} />*/}
     </div>
   );
 };

@@ -131,8 +131,8 @@ const ActivitiesPage = () => {
     </div>
       
       <div className="flex flex-col md:flex-row gap-6">
-        {/* 左侧筛选区 */}
-        <div className="md:w-1/4">
+        
+        {/*<div className="md:w-1/4">
           <div className="bg-white rounded-lg shadow p-6 sticky top-4">
             <h2 className="text-xl font-bold mb-4">筛选条件</h2>
             
@@ -212,7 +212,7 @@ const ActivitiesPage = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>*/}
         
         {/* 右侧活动列表 */}
         <div className="md:w-3/4">

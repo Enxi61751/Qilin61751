@@ -10,7 +10,7 @@ const ActivityList = () => {
     <div>
       {activities.map(activity => (
         <div key={activity.id}>
-          <Link to={`/activities/${activity.id}`}>
+          <Link to={`/activity/${activity.id}`}>
             <h3>{activity.title}</h3>
             {/* 其他内容 */}
           </Link>
