@@ -1,9 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import AuthContext from '@/context/AuthContext';  
+import { useAuth } from '@/context/AuthContext';  
 
 const Navbar = () => {
-  const { currentUser, logout } = useContext(AuthContext);
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-600 text-white shadow-md">
+    <nav className="navbar-card">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <Link to="/" className="text-xl font-bold">体育活动室</Link>
         

@@ -474,13 +474,6 @@ body {
   animation-duration: 40s;
 }
 
-.h-screen {
-  height: 100vh;      /* 占满整个视口高度 */
-  overflow-y: auto
-        /* 或100vh */
-     /* 垂直滚动 */
-    
-}
 
 @keyframes square {
   0% {
@@ -493,4 +486,25 @@ body {
     opacity: 0;
     border-radius: 50%;
   }
+}
+.h-screen {
+  height: 100vh;      /* 占满整个视口高度 */
+  overflow-y: auto
+        /* 或100vh */
+     /* 垂直滚动 */
+    
+}
+
+.navbar-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(67, 97, 238, 0.08);
+  margin: 24px auto;
+  max-width: 900px;
+  padding: 16px 32px;
+}
+.profile-page {
+  
+  height: 100vh;      /* 占满整个视口高度 */
+  overflow-y: auto
 }

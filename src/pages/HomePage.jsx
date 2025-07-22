@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AuthContext from '@/context/AuthContext';  
+import { useAuth } from '@/context/AuthContext';  
 import Navbar from '@/components/UI/Navbar';
 
 const HomePage = () => {
-  const { currentUser } = AuthContext;
+  const { currentUser } = useAuth();
 
   return (
     <div className="h-screen">

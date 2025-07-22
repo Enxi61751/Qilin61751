@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import AuthContext from '../../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import "@styles"; // 添加在顶部
 const Register = () => {
@@ -8,7 +8,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const { register } = AuthContext;
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {

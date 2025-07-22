@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import AuthContext from '@/context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import ActivityDetail from '@/components/Activity/ActivityDetail';
 import ActivityRegister from '@/components/Activity/ActivityRegister';
 import ActivityComments from '@/components/Activity/ActivityComments';
@@ -10,7 +10,7 @@ import ActivityList from '../components/Activity/ActivityList';
 const ActivityDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { currentUser } = AuthContext;
+  const { currentUser } = useAuth();
   const { activities } = useContext(ActivityContext);
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import AuthContext from '@/context/AuthContext';  
+import { useAuth } from '@/context/AuthContext';         
 
 const ProfilePage = () => {
-  const { currentUser, updateUser, logout } = AuthContext;
+  const { currentUser, updateUser, logout } = useAuth();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -57,7 +57,7 @@ const ProfilePage = () => {
 
   if (!currentUser) {
     return (
-      <div className="container mx-auto px-4 py-12">
+      <div className="profile-page">
         <div className="max-w-2xl mx-auto bg-blue-50 border border-blue-200 rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">需要登录</h2>
           <p className="mb-6">请登录账号以查看个人资料</p>

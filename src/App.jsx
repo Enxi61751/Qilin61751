@@ -1,6 +1,6 @@
 // App.jsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import AuthContext from '@context/AuthContext';  
+import { useAuth } from '@/context/AuthContext';  
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import { Dashboard } from './components/Dashboard';
@@ -12,7 +12,7 @@ import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 
 function App() {
-  const { currentUser, loading } = AuthContext;
+  const { currentUser, loading } = useAuth();
 
   if (loading) return <div>加载中...</div>;
 
