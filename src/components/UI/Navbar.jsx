@@ -13,35 +13,35 @@ const Navbar = () => {
 
   return (
     <nav className="navbar-card">
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold">体育活动室</Link>
+      <div className="navbar-logo">
+        {/*<Link to="/" className="nav-link-card">体育活动室</Link>*/}
         
-        <div className="flex items-center space-x-4">
-          <Link to="/activities" className="hover:bg-blue-700 px-3 py-2 rounded transition">
+        <div className="navbar-center">
+          <Link to="/activities" className="nav-link-card">
             活动中心
           </Link>
           
           {currentUser ? (
             <>
-              <Link to="/orders" className="hover:bg-blue-700 px-3 py-2 rounded transition">
+              <Link to="/orders" className="nav-link-card">
                 我的订单
               </Link>
-              <Link to="/profile" className="hover:bg-blue-700 px-3 py-2 rounded transition">
+              <Link to="/profile" className="nav-link-card">
                 个人中心
               </Link>
               <button 
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded transition"
+                className="logout-btn-card"
               >
                 退出登录
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="hover:bg-blue-700 px-3 py-2 rounded transition">
+              <Link to="/login" className="nav-link-card">
                 登录
               </Link>
-              <Link to="/register" className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded transition">
+              <Link to="/register" className="nav-link-card">
                 注册
               </Link>
             </>

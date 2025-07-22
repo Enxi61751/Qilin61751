@@ -19,29 +19,7 @@ const HomePage = () => {
             加入我们的体育社区，参与各种精彩活动，结交志同道合的朋友
           </p>
           
-          {currentUser ? (
-            <Link 
-              to="/activities" 
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 inline-block"
-            >
-              浏览活动
-            </Link>
-          ) : (
-            <div className="flex justify-center gap-4">
-              <Link 
-                to="/login" 
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300"
-              >
-                登录
-              </Link>
-              <Link 
-                to="/register" 
-                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300"
-              >
-                注册
-              </Link>
-            </div>
-          )}
+          
         </div>
 
         {/* 特色活动 */}
