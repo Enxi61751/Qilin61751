@@ -175,7 +175,7 @@ body {
 /* 登录页面样式 */
 .login-page {
   /*min-height: 50vh;*/
-  background: linear-gradient(200deg, #b78ee4 0%, #9ed5f0 100%);
+  background: linear-gradient(200deg, #add8f1 0%, #bfe2f4 100%);
   display: inline-block;
   border-radius: var(--border-radius);
   padding: 20px; /* 蓝紫色比白色大一圈 */
@@ -202,7 +202,7 @@ body {
 }
 
 .login-header h2 {
-  color: white;
+  color: rgb(51, 58, 62);
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 10px;
