@@ -1,12 +1,12 @@
 import React, { useEffect, useContext } from 'react';
-import { useAuth } from '@/context/AuthContext';
+import AuthContext from '@/context/AuthContext';
 import ActivityContext from '@/context/ActivityContext';
 import ActivityList from '@/components/Activity/ActivityList';
 import ActivitySearch from '@/components/Activity/ActivitySearch';
 import CategoryFilter from '@/pages/CategoryFilter';
 import "@styles"; // 添加在顶部
 const ActivitiesPage = () => {
-  const { currentUser } = useAuth();
+  const { currentUser } = AuthContext;
   
   // 安全访问 Context
   const context = useContext(ActivityContext);

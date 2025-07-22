@@ -474,6 +474,14 @@ body {
   animation-duration: 40s;
 }
 
+.h-screen {
+  height: 100vh;      /* 占满整个视口高度 */
+  overflow-y: auto
+        /* 或100vh */
+     /* 垂直滚动 */
+    
+}
+
 @keyframes square {
   0% {
     transform: translateY(0) rotate(0deg);

@@ -6,7 +6,11 @@ const ActivitySearch = () => {
   const { setFilters } = useContext(ActivityContext);
   
   const handleSearch = () => {
-    setFilters(prev => ({ ...prev, search: searchTerm }));
+    const result = activities.filter(activity =>
+      activity.title.includes(keyword) || activity.description.includes(keyword)
+    );
+    setFilters(result);
+   
   };
   
   return (

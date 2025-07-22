@@ -1,7 +1,7 @@
-import { useAuth } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 
 export const Dashboard = () => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout } = AuthContext;
 
   if (!currentUser) return null;
 

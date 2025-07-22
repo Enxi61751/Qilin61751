@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '@/context/AuthContext';
+import AuthContext from '@/context/AuthContext';
 import ActivityOrders from '@/components/Activity/ActivityOrders';
 
 const OrdersPage = () => {
-  const { currentUser } = useAuth();
+  const { currentUser } = AuthContext;
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 

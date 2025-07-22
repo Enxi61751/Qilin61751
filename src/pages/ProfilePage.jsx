@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '@/context/AuthContext';
+import AuthContext from '@/context/AuthContext';  
 
 const ProfilePage = () => {
-  const { currentUser, updateUser, logout } = useAuth();
+  const { currentUser, updateUser, logout } = AuthContext;
   const [formData, setFormData] = useState({
     username: '',
     email: '',
