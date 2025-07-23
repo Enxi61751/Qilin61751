@@ -5,6 +5,7 @@ import ActivityDetail from '@/components/Activity/ActivityDetail';
 import ActivityRegister from '@/components/Activity/ActivityRegister';
 import ActivityComments from '@/components/Activity/ActivityComments';
 import ActivityContext from '@/context/ActivityContext';
+import Slider from '../components/UI/Slider';
 import ActivityList from '../components/Activity/ActivityList';
 
 const ActivityDetailPage = () => {

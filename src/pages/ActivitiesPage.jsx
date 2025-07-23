@@ -3,6 +3,8 @@ import { useAuth } from '@/context/AuthContext';
 import ActivityContext from '@/context/ActivityContext';
 import ActivityList from '@/components/Activity/ActivityList';
 import ActivitySearch from '@/components/Activity/ActivitySearch';
+import ActivitySlider from '@/components/Activity/ActivitySlider';
+import ActivityCardSlider from '@/components/Activity/ActivityCardSlider';
 import CategoryFilter from '@/pages/CategoryFilter';
 import "@styles"; // 添加在顶部
 const ActivitiesPage = () => {
@@ -129,6 +131,7 @@ const ActivitiesPage = () => {
       <h1>所有活动</h1>
       <p>发现适合您的体育活动，加入我们的社区</p>
     </div>
+    
       
       <div className="flex flex-col md:flex-row gap-6">
         
