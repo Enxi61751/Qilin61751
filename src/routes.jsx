@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import ActivitiesPage from './pages/ActivitiesPage';
 import ActivityDetailPage from './pages/ActivityDetailPage';
+import PaymentPage from './pages/PaymentPage';
 import OrdersPage from './pages/OrdersPage';
 import Login from './components/Auth/Login';
 import HomePage from './pages/HomePage';
@@ -12,6 +13,7 @@ const AppRoutes = () => (
     <Route path="/orders" element={<OrdersPage />} />
     <Route path="/login" element={<Login />} />
     <Route path="/activity/:id" element={<ActivityDetailPage />} />
+    <Route path="/payment/:id" element={<PaymentPage />} />
     {/* 其他路由... */}
   </Routes>
 );
