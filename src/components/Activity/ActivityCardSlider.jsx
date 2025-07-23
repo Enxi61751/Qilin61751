@@ -12,6 +12,8 @@ const ActivityCardSlider = ({ activities, slidesToShow = 3, className = "" }) =>
       badminton: '/images/badminton.jpg',
       running: '/images/running.jpg',
       swimming: '/images/swimming.jpg',
+      hiking: '/images/hiking.jpg',
+      taichi: '/images/taichi.jpg',
     };
     return imageMap[imageKey] || '/images/default-activity.jpg';
   };
@@ -35,7 +37,7 @@ const ActivityCardSlider = ({ activities, slidesToShow = 3, className = "" }) =>
       >
         {activities.map((activity) => (
           <div key={activity.id} className="px-3">
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 h-full">
               {/* 活动图片 */}
               <div className="relative h-48 overflow-hidden">
                 <div 
@@ -46,32 +48,55 @@ const ActivityCardSlider = ({ activities, slidesToShow = 3, className = "" }) =>
                 >
                   {/* 价格标签 */}
                   <div className="absolute top-3 right-3">
-                    <span className={`px-3 py-1 rounded-full text-sm font-bold ${
+                    <span className={`px-3 py-1 rounded-full text-sm font-bold shadow-lg ${
                       activity.price > 0 
-                        ? 'bg-red-500 text-white' 
-                        : 'bg-green-500 text-white'
+                        ? 'bg-gradient-to-r from-red-500 to-pink-600 text-white' 
+                        : 'bg-gradient-to-r from-green-500 to-emerald-600 text-white'
                     }`}>
                       {activity.price > 0 ? `¥${activity.price}` : '免费'}
                     </span>
                   </div>
-                  {/* 分类标签 */}
-                  <div className="absolute top-3 left-3">
-                    <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs font-medium">
+                  {/* 分类和难度标签 */}
+                  <div className="absolute top-3 left-3 flex flex-col gap-1">
+                    <span className="bg-blue-600/90 backdrop-blur-sm text-white px-2 py-1 rounded text-xs font-medium">
                       {activity.category}
                     </span>
+                    {activity.difficulty && (
+                      <span className="bg-purple-600/90 backdrop-blur-sm text-white px-2 py-1 rounded text-xs font-medium">
+                        {activity.difficulty}
+                      </span>
+                    )}
                   </div>
+                  {/* 精选标记 */}
+                  {activity.featured && (
+                    <div className="absolute bottom-3 left-3">
+                      <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg">
+                        ⭐ 精选
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
               
               {/* 卡片内容 */}
               <div className="p-4">
-                <h3 className="text-xl font-bold mb-2 text-gray-800 hover:text-blue-600 transition-colors duration-200">
+                <h3 className="text-xl font-bold mb-2 text-gray-800 hover:text-blue-600 transition-colors duration-200 line-clamp-1">
                   {activity.title}
                 </h3>
                 
                 <p className="text-gray-600 text-sm mb-3 line-clamp-2">
                   {activity.description}
                 </p>
+
+                {/* 主办方信息 */}
+                {activity.organizer && (
+                  <div className="flex items-center text-xs text-gray-500 mb-3">
+                    <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    <span>主办：{activity.organizer}</span>
+                  </div>
+                )}
                 {/* 活动信息 */}
                 <div className="space-y-2 text-sm text-gray-500 mb-4">
                   <div className="flex items-center">
@@ -112,12 +137,19 @@ const ActivityCardSlider = ({ activities, slidesToShow = 3, className = "" }) =>
                 <div className="flex space-x-2">
                   <Link
                     to={`/activity/${activity.id}`}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-lg font-medium transition-colors duration-200"
+                    className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-center py-2 px-4 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg"
                   >
                     查看详情
                   </Link>
-                  <button className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg font-medium transition-colors duration-200">
-                    立即报名
+                  <button 
+                    className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg ${
+                      activity.registered >= activity.capacity
+                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white'
+                    }`}
+                    disabled={activity.registered >= activity.capacity}
+                  >
+                    {activity.registered >= activity.capacity ? '已满员' : '立即报名'}
                   </button>
                 </div>
               </div>

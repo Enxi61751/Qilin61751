@@ -98,6 +98,112 @@ body {
   font-size: 16px;
 }
 
+/* 活动页面样式 */
+.activities-page {
+  min-height: 100vh;
+}
+
+.activities-page .page-header {
+  position: relative;
+  overflow: hidden;
+}
+
+.activities-page .page-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+/* 滑轨增强样式 */
+.activity-slider .group:hover .group\/slide img {
+  transform: scale(1.05);
+}
+
+.activity-card-slider .hover\:-translate-y-2:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* 进度条动画 */
+@keyframes progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+.progress-bar {
+  animation: progress 4s linear infinite;
+}
+
+/* 响应式网格 */
+@media (max-width: 768px) {
+  .activities-page .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .activities-page .page-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .activity-slider {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .activities-page .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .activities-page .page-header h1 {
+    font-size: 2rem;
+  }
+}
+
+/* 玻璃态效果 */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 悬浮动画 */
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* 文本截断 */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
 .btn-primary {
   background: var(--primary);
   color: white;
