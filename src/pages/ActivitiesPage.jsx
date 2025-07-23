@@ -3,6 +3,8 @@ import { useAuth } from '@/context/AuthContext';
 import ActivityContext from '@/context/ActivityContext';
 import ActivityList from '@/components/Activity/ActivityList';
 import ActivitySearch from '@/components/Activity/ActivitySearch';
+import ActivitySlider from '@/components/Activity/ActivitySlider';
+import ActivityCardSlider from '@/components/Activity/ActivityCardSlider';
 import CategoryFilter from '@/pages/CategoryFilter';
 import "@styles"; // 添加在顶部
 const ActivitiesPage = () => {
@@ -129,6 +131,45 @@ const ActivitiesPage = () => {
       <h1>所有活动</h1>
       <p>发现适合您的体育活动，加入我们的社区</p>
     </div>
+      
+      {/* 主要活动轮播滑轨 */}
+      <div className="mb-12">
+        <ActivitySlider 
+          activities={activities.slice(0, 4)} // 展示前4个活动
+          autoPlay={true}
+          className="mb-8"
+        />
+      </div>
+      
+      {/* 热门活动卡片滑轨 */}
+      <div className="mb-12">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-3xl font-bold text-gray-800">热门活动</h2>
+          <button className="text-blue-600 hover:text-blue-800 font-medium">
+            查看全部 →
+          </button>
+        </div>
+        <ActivityCardSlider 
+          activities={activities}
+          slidesToShow={3}
+          className="mb-8"
+        />
+      </div>
+      
+      {/* 推荐活动卡片滑轨 - 显示2个卡片 */}
+      <div className="mb-12">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-3xl font-bold text-gray-800">推荐活动</h2>
+          <button className="text-blue-600 hover:text-blue-800 font-medium">
+            查看更多 →
+          </button>
+        </div>
+        <ActivityCardSlider 
+          activities={activities.slice(2, 6)} // 显示不同的活动
+          slidesToShow={2}
+          className="mb-8"
+        />
+      </div>
       
       <div className="flex flex-col md:flex-row gap-6">
         

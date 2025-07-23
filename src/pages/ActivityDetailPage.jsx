@@ -6,6 +6,7 @@ import ActivityRegister from '@/components/Activity/ActivityRegister';
 import ActivityComments from '@/components/Activity/ActivityComments';
 import ActivityContext from '@/context/ActivityContext';
 import ActivityList from '../components/Activity/ActivityList';
+import Slider from '../components/UI/Slider';
 
 const ActivityDetailPage = () => {
   const { id } = useParams();
@@ -81,8 +82,33 @@ const ActivityDetailPage = () => {
       </button>
       
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-        {/* 活动封面图 */}
-        <div className="h-64 bg-gray-300 border-2 border-dashed w-full"></div>
+        {/* 活动图片滑轨 */}
+        <div className="h-64 w-full">
+          <Slider
+            autoPlay={true}
+            autoPlayInterval={5000}
+            showDots={true}
+            showArrows={true}
+            infinite={true}
+            className="h-64"
+          >
+            {/* 生成多张活动相关图片 */}
+            {[1, 2, 3].map((index) => (
+              <div 
+                key={index}
+                className="h-64 bg-gradient-to-r from-blue-400 to-purple-500 relative"
+              >
+                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <h3 className="text-2xl font-bold mb-2">{activity.title}</h3>
+                    <p className="text-lg opacity-90">图片 {index}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </div>
         
         <div className="p-6">
           <ActivityDetail activity={activity} />
