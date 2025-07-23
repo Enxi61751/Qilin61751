@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索组件使用示例</title>
+    <link rel="stylesheet" href="search-component.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .demo-section p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .demo-item {
+            padding: 20px;
+            border: 1px solid #e1e5e9;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .demo-item h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .controls button:hover {
+            background: #f0f0f0;
+            border-color: #667eea;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="demo-section">
+            <h2>🔍 现代搜索组件示例</h2>
+            <p>以下展示了搜索组件的各种使用方式，包括不同的尺寸、主题和配置选项。</p>
+        </div>
+
+        <div class="demo-section">
+            <h2>基础用法</h2>
+            <p>最简单的搜索组件使用方式</p>
+            <div id="basic-search"></div>
+            <div class="code-example">
+&lt;div id="search-container"&gt;&lt;/div&gt;
+&lt;script&gt;
+const searchComponent = new SearchComponent('#search-container', {
+    placeholder: '搜索任何内容...',
+    onSearch: (term) =&gt; {
+        console.log('搜索关键词:', term);
+    }
+});
+&lt;/script&gt;
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>不同尺寸</h2>
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <h3>小尺寸</h3>
+                    <div id="small-search"></div>
+                </div>
+                <div class="demo-item">
+                    <h3>中等尺寸（默认）</h3>
+                    <div id="medium-search"></div>
+                </div>
+                <div class="demo-item">
+                    <h3>大尺寸</h3>
+                    <div id="large-search"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>不同主题</h2>
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <h3>默认主题</h3>
+                    <div id="theme-default"></div>
+                </div>
+                <div class="demo-item">
+                    <h3>简约主题</h3>
+                    <div id="theme-minimal"></div>
+                </div>
+                <div class="demo-item">
+                    <h3>圆角主题</h3>
+                    <div id="theme-rounded"></div>
+                </div>
+                <div class="demo-item">
+                    <h3>成功主题</h3>
+                    <div id="theme-success"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>带搜索建议</h2>
+            <p>支持自动完成和搜索建议功能</p>
+            <div id="suggestions-search"></div>
+        </div>
+
+        <div class="demo-section">
+            <h2>动态控制</h2>
+            <p>通过 JavaScript 动态控制搜索组件的外观和行为</p>
+            <div id="dynamic-search"></div>
+            <div class="controls">
+                <button onclick="changeSizeSmall()">小尺寸</button>
+                <button onclick="changeSizeMedium()">中等</button>
+                <button onclick="changeSizeLarge()">大尺寸</button>
+                <button onclick="changeThemeMinimal()">简约主题</button>
+                <button onclick="changeThemeSuccess()">成功主题</button>
+                <button onclick="changeThemeWarning()">警告主题</button>
+                <button onclick="focusSearch()">聚焦</button>
+                <button onclick="clearSearch()">清空</button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>自定义尺寸调节</h2>
+            <p>通过滑块动态调整搜索框的各项参数</p>
+            <div id="custom-search"></div>
+            <div style="margin-top: 30px;">
+                <div style="margin-bottom: 15px;">
+                    <label>宽度: <span id="width-value">600px</span></label><br>
+                    <input type="range" id="width-slider" min="300" max="800" value="600" style="width: 100%; margin-top: 5px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label>高度: <span id="height-value">56px</span></label><br>
+                    <input type="range" id="height-slider" min="40" max="80" value="56" style="width: 100%; margin-top: 5px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label>字体大小: <span id="font-value">16px</span></label><br>
+                    <input type="range" id="font-slider" min="12" max="24" value="16" style="width: 100%; margin-top: 5px;">
+                </div>
+                <div>
+                    <label>圆角: <span id="radius-value">12px</span></label><br>
+                    <input type="range" id="radius-slider" min="0" max="30" value="12" style="width: 100%; margin-top: 5px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="search-component.js"></script>
+    <script>
+        // 存储组件实例
+        let dynamicSearchComponent;
+        let customSearchComponent;
+
+        // 初始化所有搜索组件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 基础搜索
+            new SearchComponent('#basic-search', {
+                placeholder: '搜索任何内容...',
+                onSearch: (term) => {
+                    alert(`基础搜索: ${term}`);
+                }
+            });
+
+            // 不同尺寸
+            new SearchComponent('#small-search', {
+                size: 'small',
+                placeholder: '小搜索框...'
+            });
+
+            new SearchComponent('#medium-search', {
+                size: 'medium',
+                placeholder: '中等搜索框...'
+            });
+
+            new SearchComponent('#large-search', {
+                size: 'large',
+                placeholder: '大搜索框...'
+            });
+
+            // 不同主题
+            new SearchComponent('#theme-default', {
+                theme: 'default',
+                placeholder: '默认主题...'
+            });
+
+            new SearchComponent('#theme-minimal', {
+                theme: 'minimal',
+                placeholder: '简约主题...'
+            });
+
+            new SearchComponent('#theme-rounded', {
+                theme: 'rounded',
+                placeholder: '圆角主题...'
+            });
+
+            new SearchComponent('#theme-success', {
+                theme: 'success',
+                placeholder: '成功主题...'
+            });
+
+            // 带搜索建议
+            new SearchComponent('#suggestions-search', {
+                enableSuggestions: true,
+                suggestions: [
+                    'JavaScript',
+                    'Python',
+                    'React',
+                    'Vue.js',
+                    'Node.js',
+                    'TypeScript',
+                    'HTML',
+                    'CSS',
+                    'Angular',
+                    'Bootstrap'
+                ],
+                placeholder: '输入编程语言...',
+                onSearch: (term) => {
+                    alert(`搜索建议: ${term}`);
+                }
+            });
+
+            // 动态控制
+            dynamicSearchComponent = new SearchComponent('#dynamic-search', {
+                placeholder: '可动态控制的搜索框...',
+                onSearch: async (term) => {
+                    // 模拟异步搜索
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            alert(`动态搜索完成: ${term}`);
+                            resolve();
+                        }, 2000);
+                    });
+                }
+            });
+
+            // 自定义尺寸
+            customSearchComponent = new SearchComponent('#custom-search', {
+                placeholder: '自定义尺寸搜索框...',
+                onSearch: (term) => {
+                    alert(`自定义搜索: ${term}`);
+                }
+            });
+
+            // 绑定尺寸控制器
+            bindSizeControls();
+        });
+
+        // 动态控制函数
+        function changeSizeSmall() {
+            dynamicSearchComponent.setSize('small');
+        }
+
+        function changeSizeMedium() {
+            dynamicSearchComponent.setSize('medium');
+        }
+
+        function changeSizeLarge() {
+            dynamicSearchComponent.setSize('large');
+        }
+
+        function changeThemeMinimal() {
+            dynamicSearchComponent.setTheme('minimal');
+        }
+
+        function changeThemeSuccess() {
+            dynamicSearchComponent.setTheme('success');
+        }
+
+        function changeThemeWarning() {
+            dynamicSearchComponent.setTheme('warning');
+        }
+
+        function focusSearch() {
+            dynamicSearchComponent.focus();
+        }
+
+        function clearSearch() {
+            dynamicSearchComponent.clear();
+        }
+
+        // 绑定尺寸控制器
+        function bindSizeControls() {
+            const widthSlider = document.getElementById('width-slider');
+            const heightSlider = document.getElementById('height-slider');
+            const fontSlider = document.getElementById('font-slider');
+            const radiusSlider = document.getElementById('radius-slider');
+
+            const widthValue = document.getElementById('width-value');
+            const heightValue = document.getElementById('height-value');
+            const fontValue = document.getElementById('font-value');
+            const radiusValue = document.getElementById('radius-value');
+
+            widthSlider.addEventListener('input', (e) => {
+                const value = e.target.value + 'px';
+                widthValue.textContent = value;
+                customSearchComponent.setCustomSize({ width: value });
+            });
+
+            heightSlider.addEventListener('input', (e) => {
+                const value = e.target.value + 'px';
+                heightValue.textContent = value;
+                customSearchComponent.setCustomSize({ height: value });
+            });
+
+            fontSlider.addEventListener('input', (e) => {
+                const value = e.target.value + 'px';
+                fontValue.textContent = value;
+                customSearchComponent.setCustomSize({ fontSize: value });
+            });
+
+            radiusSlider.addEventListener('input', (e) => {
+                const value = e.target.value + 'px';
+                radiusValue.textContent = value;
+                customSearchComponent.setCustomSize({ borderRadius: value });
+            });
+        }
+    </script>
+</body>
+</html>

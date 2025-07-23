@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>现代搜索组件</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .search-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 15px;
+            align-items: stretch;
+        }
+
+        .search-input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 20px;
+            font-size: 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .search-input::placeholder {
+            color: #a0a0a0;
+            font-weight: 300;
+        }
+
+        /* 搜索按钮 - 卡片样式 */
+        .search-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 18px 30px;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+            min-width: 120px;
+        }
+
+        .search-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .search-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .search-button:hover::before {
+            left: 100%;
+        }
+
+        .search-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .search-icon {
+            margin-right: 8px;
+        }
+
+        /* 尺寸调节控制器 */
+        .size-controls {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .size-controls h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            min-width: 100px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .size-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: #e1e5e9;
+            outline: none;
+        }
+
+        .size-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+        }
+
+        .size-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+        }
+
+        .size-value {
+            min-width: 50px;
+            text-align: right;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .search-form {
+                flex-direction: column;
+            }
+            
+            .search-container {
+                padding: 30px 20px;
+            }
+            
+            .control-group {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            
+            .control-group label {
+                min-width: auto;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-container {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <h1 class="search-title">智能搜索</h1>
+        
+        <form class="search-form" onsubmit="handleSearch(event)">
+            <div class="search-input-wrapper">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    placeholder="请输入搜索关键词..." 
+                    id="searchInput"
+                >
+            </div>
+            <button type="submit" class="search-button">
+                <span class="search-icon">🔍</span>
+                搜索
+            </button>
+        </form>
+
+        <div class="size-controls">
+            <h3>搜索框尺寸调节</h3>
+            
+            <div class="control-group">
+                <label for="widthSlider">宽度:</label>
+                <input 
+                    type="range" 
+                    id="widthSlider" 
+                    class="size-slider" 
+                    min="300" 
+                    max="800" 
+                    value="600"
+                    oninput="updateWidth(this.value)"
+                >
+                <span class="size-value" id="widthValue">600px</span>
+            </div>
+            
+            <div class="control-group">
+                <label for="heightSlider">高度:</label>
+                <input 
+                    type="range" 
+                    id="heightSlider" 
+                    class="size-slider" 
+                    min="40" 
+                    max="80" 
+                    value="56"
+                    oninput="updateHeight(this.value)"
+                >
+                <span class="size-value" id="heightValue">56px</span>
+            </div>
+            
+            <div class="control-group">
+                <label for="fontSlider">字体大小:</label>
+                <input 
+                    type="range" 
+                    id="fontSlider" 
+                    class="size-slider" 
+                    min="12" 
+                    max="24" 
+                    value="16"
+                    oninput="updateFontSize(this.value)"
+                >
+                <span class="size-value" id="fontValue">16px</span>
+            </div>
+            
+            <div class="control-group">
+                <label for="radiusSlider">圆角:</label>
+                <input 
+                    type="range" 
+                    id="radiusSlider" 
+                    class="size-slider" 
+                    min="0" 
+                    max="30" 
+                    value="12"
+                    oninput="updateBorderRadius(this.value)"
+                >
+                <span class="size-value" id="radiusValue">12px</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 搜索功能
+        function handleSearch(event) {
+            event.preventDefault();
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            
+            if (searchTerm) {
+                // 这里可以添加实际的搜索逻辑
+                alert(`搜索关键词: "${searchTerm}"`);
+                
+                // 模拟搜索加载效果
+                const button = document.querySelector('.search-button');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<span class="search-icon">⏳</span>搜索中...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 1500);
+            } else {
+                alert('请输入搜索关键词！');
+            }
+        }
+
+        // 尺寸调节函数
+        function updateWidth(value) {
+            document.querySelector('.search-container').style.maxWidth = value + 'px';
+            document.getElementById('widthValue').textContent = value + 'px';
+        }
+
+        function updateHeight(value) {
+            const searchInput = document.querySelector('.search-input');
+            const searchButton = document.querySelector('.search-button');
+            
+            searchInput.style.padding = (value/2 - 8) + 'px 20px';
+            searchButton.style.padding = (value/2 - 8) + 'px 30px';
+            
+            document.getElementById('heightValue').textContent = value + 'px';
+        }
+
+        function updateFontSize(value) {
+            const searchInput = document.querySelector('.search-input');
+            const searchButton = document.querySelector('.search-button');
+            
+            searchInput.style.fontSize = value + 'px';
+            searchButton.style.fontSize = value + 'px';
+            
+            document.getElementById('fontValue').textContent = value + 'px';
+        }
+
+        function updateBorderRadius(value) {
+            const searchInput = document.querySelector('.search-input');
+            const searchButton = document.querySelector('.search-button');
+            
+            searchInput.style.borderRadius = value + 'px';
+            searchButton.style.borderRadius = value + 'px';
+            
+            document.getElementById('radiusValue').textContent = value + 'px';
+        }
+
+        // 键盘快捷键支持
+        document.addEventListener('keydown', function(event) {
+            // Ctrl+K 或 Cmd+K 聚焦搜索框
+            if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+                event.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+            
+            // ESC 清空搜索框
+            if (event.key === 'Escape') {
+                document.getElementById('searchInput').value = '';
+                document.getElementById('searchInput').blur();
+            }
+        });
+
+        // 自动聚焦搜索框
+        window.addEventListener('load', function() {
+            document.getElementById('searchInput').focus();
+        });
+    </script>
+</body>
+</html>

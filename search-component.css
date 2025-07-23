@@ -1,0 +1,197 @@
+/* 现代搜索组件样式 */
+.search-component {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.search-form {
+    display: flex;
+    gap: 15px;
+    align-items: stretch;
+}
+
+.search-input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 18px 20px;
+    font-size: 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+    background: #fff;
+    font-family: inherit;
+}
+
+.search-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+}
+
+.search-input::placeholder {
+    color: #a0a0a0;
+    font-weight: 300;
+}
+
+/* 搜索按钮 - 卡片样式 */
+.search-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 18px 30px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+    min-width: 120px;
+    font-family: inherit;
+}
+
+.search-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.search-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+}
+
+.search-button:hover::before {
+    left: 100%;
+}
+
+.search-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(102, 126, 234, 0.3);
+}
+
+.search-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.search-icon {
+    margin-right: 8px;
+}
+
+/* 尺寸变体 */
+.search-component.size-small .search-input,
+.search-component.size-small .search-button {
+    padding: 12px 16px;
+    font-size: 14px;
+}
+
+.search-component.size-large .search-input,
+.search-component.size-large .search-button {
+    padding: 22px 28px;
+    font-size: 18px;
+}
+
+/* 主题变体 */
+.search-component.theme-minimal .search-input {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.search-component.theme-minimal .search-button {
+    background: #333;
+    border-radius: 6px;
+    box-shadow: none;
+}
+
+.search-component.theme-rounded .search-input,
+.search-component.theme-rounded .search-button {
+    border-radius: 25px;
+}
+
+.search-component.theme-success .search-button {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    box-shadow: 0 8px 15px rgba(17, 153, 142, 0.3);
+}
+
+.search-component.theme-warning .search-button {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    box-shadow: 0 8px 15px rgba(240, 147, 251, 0.3);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .search-button {
+        width: 100%;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* 动画效果 */
+@keyframes searchPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.search-button.loading {
+    animation: searchPulse 1.5s infinite;
+}
+
+/* 自定义滚动条（如果需要） */
+.search-suggestions {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    background: white;
+    margin-top: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-suggestion-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+.search-suggestion-item:hover {
+    background-color: #f8f9fa;
+}
+
+.search-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+/* 错误状态 */
+.search-input.error {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.1);
+}
+
+/* 成功状态 */
+.search-input.success {
+    border-color: #28a745;
+    box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.1);
+}
