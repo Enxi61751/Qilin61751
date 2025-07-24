@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';    
 import ActivityContext from '@/context/ActivityContext';
 import ActivityList from '@/components/Activity/ActivityList';
@@ -9,6 +9,12 @@ import CategoryFilter from '@/pages/CategoryFilter';
 import "@styles"; // 添加在顶部
 const ActivitiesPage = () => {
   const { currentUser } = useAuth();
+  const [selectedCategory, setSelectedCategory] = useState('全部');
+  const [stats, setStats] = useState({
+    totalActivities: 0,
+    totalParticipants: 0,
+    popularCategories: []
+  })
   
   // 安全访问 Context
   const context = useContext(ActivityContext);
@@ -49,6 +55,9 @@ const ActivitiesPage = () => {
         registered: 15,
         price: 30,
         image: 'basketball',
+        featured: true,
+        difficulty: '初级',
+        organizer: '城市篮球俱乐部'
       },
       {
         id: '2',
@@ -62,6 +71,9 @@ const ActivitiesPage = () => {
         registered: 10,
         price: 50,
         image: 'yoga',
+        featured: true,
+        difficulty: '初级',
+        organizer: '静心瑜伽中心'
       },
       {
         id: '3',
@@ -75,6 +87,9 @@ const ActivitiesPage = () => {
         registered: 22,
         price: 40,
         image: 'football',
+        featured: false,
+        difficulty: '中级',
+        organizer: '职业足球学院'
       },
       {
         id: '4',
@@ -88,6 +103,9 @@ const ActivitiesPage = () => {
         registered: 12,
         price: 60,
         image: 'badminton',
+        featured: true,
+        difficulty: '中级',
+        organizer: '羽毛球协会'
       },
       {
         id: '5',
@@ -101,6 +119,9 @@ const ActivitiesPage = () => {
         registered: 35,
         price: 0,
         image: 'running',
+        featured: false,
+        difficulty: '初级',
+        organizer: '城市跑步联盟'
       },
       {
         id: '6',
@@ -114,6 +135,25 @@ const ActivitiesPage = () => {
         registered: 18,
         price: 70,
         image: 'swimming',
+        featured: false,
+        difficulty: '高级',
+        organizer: '专业游泳俱乐部'
+      },
+      {
+        id: '7',
+        title: '户外徒步探险',
+        description: '探索城市周边美丽的山林小径，呼吸新鲜空气，欣赏自然风光。',
+        date: '2023-06-21',
+        time: '08:00 - 16:00',
+        location: '青山国家森林公园',
+        category: '户外',
+        capacity: 25,
+        registered: 20,
+        price: 80,
+        image: 'hiking',
+        featured: true,
+        difficulty: '中级',
+        organizer: '户外探险俱乐部'
       },
     ];
     
@@ -131,94 +171,9 @@ const ActivitiesPage = () => {
       <h1>所有活动</h1>
       <p>发现适合您的体育活动，加入我们的社区</p>
     </div>
-    
-      
-      <div className="flex flex-col md:flex-row gap-6">
-        
-        {/*<div className="md:w-1/4">
-          <div className="bg-white rounded-lg shadow p-6 sticky top-4">
-            <h2 className="text-xl font-bold mb-4">筛选条件</h2>
-            
-            <div className="mb-6">
-              <h3 className="font-medium mb-2">活动类型</h3>
-              <CategoryFilter 
-                currentCategory={filters.category}
-                onChange={handleCategoryChange}
-              />
-            </div>
-            
-            <div className="mb-6">
-              <h3 className="font-medium mb-2">价格范围</h3>
-              <div className="space-y-2">
-                <div className="flex items-center">
-                  <input 
-                    type="radio" 
-                    id="price-all" 
-                    name="price" 
-                    className="mr-2"
-                    defaultChecked
-                  />
-                  <label htmlFor="price-all">全部</label>
-                </div>
-                <div className="flex items-center">
-                  <input 
-                    type="radio" 
-                    id="price-free" 
-                    name="price" 
-                    className="mr-2"
-                  />
-                  <label htmlFor="price-free">免费</label>
-                </div>
-                <div className="flex items-center">
-                  <input 
-                    type="radio" 
-                    id="price-paid" 
-                    name="price" 
-                    className="mr-2"
-                  />
-                  <label htmlFor="price-paid">付费</label>
-                </div>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="font-medium mb-2">日期范围</h3>
-              <div className="space-y-2">
-                <div className="flex items-center">
-                  <input 
-                    type="radio" 
-                    id="date-all" 
-                    name="date" 
-                    className="mr-2"
-                    defaultChecked
-                  />
-                  <label htmlFor="date-all">全部日期</label>
-                </div>
-                <div className="flex items-center">
-                  <input 
-                    type="radio" 
-                    id="date-week" 
-                    name="date" 
-                    className="mr-2"
-                  />
-                  <label htmlFor="date-week">本周</label>
-                </div>
-                <div className="flex items-center">
-                  <input 
-                    type="radio" 
-                    id="date-weekend" 
-                    name="date" 
-                    className="mr-2"
-                  />
-                  <label htmlFor="date-weekend">周末</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>*/}
-        
+      <div className="LL">
         {/* 右侧活动列表 */}
-        <div className="md:w-3/4">
+        <div className="act-list">
           <ActivitySearch />
           <ActivityList />
         </div>

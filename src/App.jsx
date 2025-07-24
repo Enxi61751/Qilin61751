@@ -11,6 +11,7 @@ import { ActivityProvider } from '@/context/ActivityContext';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 
+
 function App() {
   const { currentUser, loading } = useAuth();
 

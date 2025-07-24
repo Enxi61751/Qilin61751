@@ -34,12 +34,12 @@ const CategoryFilter = ({ currentCategory, onChange }) => {
       ))}
     </div>
     <div>
-      <Link 
+      {/*<Link 
         to={`/activity/${id}`} 
         className="detail-button"
       >
         查看详情
-      </Link>
+      </Link>*/}
     </div>
     </>
   );

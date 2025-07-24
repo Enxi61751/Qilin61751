@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
-import ActivityDetail from '@/components/Activity/ActivityDetail';
-import ActivityRegister from '@/components/Activity/ActivityRegister';
-import ActivityComments from '@/components/Activity/ActivityComments';
-import ActivityContext from '@/context/ActivityContext';
+import { useAuth } from '../context/AuthContext';
+import ActivityDetail from '../components/Activity/ActivityDetail';
+import ActivityRegister from '../components/Activity/ActivityRegister';
+import ActivityComments from '../components/Activity/ActivityComments';
+import ActivityContext from '../context/ActivityContext';
 import Slider from '../components/UI/Slider';
 import ActivityList from '../components/Activity/ActivityList';
 
@@ -71,15 +71,18 @@ const ActivityDetailPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <button 
-        onClick={() => navigate(-1)}
-        className="flex items-center text-blue-600 hover:text-blue-800 mb-6"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
-        </svg>
-        返回活动列表
-      </button>
+      {/* 返回活动列表卡片 */}
+      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+        <button 
+          onClick={() => navigate('/activities')}
+          className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
+          </svg>
+          返回活动列表
+        </button>
+      </div>
       
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         {/* 活动封面图 */}
@@ -91,23 +94,23 @@ const ActivityDetailPage = () => {
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* 报名表单 */}
             <div className="lg:col-span-2">
-              <h2 className="text-2xl font-bold mb-6">报名参与</h2>
+            
               {currentUser ? (
                 <ActivityRegister activityId={id} />
               ) : (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                  <h3 className="text-xl font-medium mb-4">需要登录</h3>
-                  <p className="mb-4">请登录账号以报名参加此活动</p>
+                <div className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-bold mb-4">需要登录</h3>
+                <p className="mb-4 text-gray-600">请登录账号以报名参加此活动</p>
                   <div className="flex space-x-4">
                     <a 
                       href="/login" 
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                     className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
                     >
                       登录
                     </a>
                     <a 
                       href="/register" 
-                      className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                      className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
                     >
                       注册
                     </a>
