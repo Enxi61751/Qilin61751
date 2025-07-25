@@ -26,8 +26,20 @@ export default {
   },
   
   // 提交评论
-  async addComment(activityId, comment) {
-    const response = await api.post(`/activities/${activityId}/comments`, { content: comment });
+  async addComment(activityId, commentData) {
+    const response = await api.post(`/activities/${activityId}/comments`, commentData);
+    return response.data;
+  },
+
+  // 获取全站评价
+  async getAllReviews() {
+    const response = await api.get('/reviews');
+    return response.data;
+  },
+
+  // 提交全站评价
+  async addReview(reviewData) {
+    const response = await api.post('/reviews', reviewData);
     return response.data;
   }
 };
