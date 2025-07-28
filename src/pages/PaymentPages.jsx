@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useOrders } from '../context/OrderContext';
 
 const PaymentPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { currentUser } = useAuth();
+  const { createOrder, payOrder, updateOrderStatus } = useOrders();
   
   const [paymentMethod, setPaymentMethod] = useState('alipay');
   const [loading, setLoading] = useState(false);
   const [activity, setActivity] = useState(null);
+  const [formData, setFormData] = useState(null);
 
   // 从导航状态中获取活动信息
   useEffect(() => {
     if (location.state && location.state.activity) {
       setActivity(location.state.activity);
+      setFormData(location.state.formData);
     } else {
       // 如果没有活动信息，重定向回活动详情页
       navigate(`/activity/${id}`);
@@ -29,14 +33,39 @@ const PaymentPage = () => {
       return;
     }
 
+    if (!formData) {
+      alert('缺少报名信息');
+      navigate(`/activity/${id}`);
+      return;
+    }
+
     setLoading(true);
-    // 模拟支付处理
-    setTimeout(() => {
-        setLoading(false);
-        alert('支付成功！');
-        navigate('/orders');
-      }, 2000);
-    };
+    try {
+      // 创建订单
+      const order = createOrder(activity, formData, paymentMethod);
+      
+      if (activity.price > 0) {
+        // 如果需要支付，则进行支付流程
+        await payOrder(order.id, { paymentMethod });
+      } else {
+        // 免费活动直接标记为已支付
+        setTimeout(async () => {
+          updateOrderStatus(order.id, '已支付', {
+            paidAt: new Date().toISOString(),
+            paymentMethod: 'free'
+          });
+        }, 1000);
+      }
+      
+      setLoading(false);
+      alert(activity.price > 0 ? '支付成功！' : '报名成功！');
+      navigate('/orders');
+    } catch (error) {
+      setLoading(false);
+      console.error('处理失败:', error);
+      alert('处理失败，请重试');
+    }
+  };
   
     if (!activity) {
       return (
