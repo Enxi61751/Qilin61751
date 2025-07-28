@@ -1,4 +1,4 @@
-import api from '../utils/api';
+
 
 export default {
   // 获取活动列表
