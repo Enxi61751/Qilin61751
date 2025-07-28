@@ -4,6 +4,7 @@ import ActivityDetailPage from './pages/ActivityDetailPage';
 import OrdersPage from './pages/OrdersPage';
 import Login from './components/Auth/Login';
 import HomePage from './pages/HomePage';
+import PaymentPage from './pages/PaymentPages';
 
 const AppRoutes = () => (
   <Routes>
@@ -12,6 +13,7 @@ const AppRoutes = () => (
     <Route path="/orders" element={<OrdersPage />} />
     <Route path="/login" element={<Login />} />
     <Route path="/activity/:id" element={<ActivityDetailPage />} />
+    <Route path="/payment/:id" element={<PaymentPage />} />
     {/* 其他路由... */}
   </Routes>
 );

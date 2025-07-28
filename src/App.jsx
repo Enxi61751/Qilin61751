@@ -10,6 +10,7 @@ import OrdersPage from './pages/OrdersPage';
 import { ActivityProvider } from '@/context/ActivityContext'; 
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
+import PaymentPage from './pages/PaymentPages';
 
 
 function App() {
@@ -45,6 +46,10 @@ function App() {
           <Route 
             path="/activity/:activityId/orders" 
             element={currentUser ? <OrdersPage /> : <Navigate to="/login" />} 
+          />
+          <Route 
+            path="/payment/:id" 
+            element={currentUser ? <PaymentPage /> : <Navigate to="/login" />} 
           />
           
           {/* 404处理 */}
