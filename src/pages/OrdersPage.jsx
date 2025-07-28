@@ -1,70 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useOrder } from '@/context/OrderContext';
 import ActivityOrders from '@/components/Activity/ActivityOrders';
 
 
 
 const OrdersPage = () => {
   const { currentUser } = useAuth();
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { orders, loading, fetchOrders } = useOrder();
+  const [filter, setFilter] = useState('all');
 
-  // 模拟获取用户订单
+  // 获取用户订单
   useEffect(() => {
     if (!currentUser) return;
-
     
-    // 模拟API调用
-    const timer = setTimeout(() => {
-      const mockOrders = [
-        {
-          id: 'order-1',
-          activity: {
-            id: '1',
-            title: '周末篮球友谊赛',
-            date: '2023-06-15',
-          },
-          status: '已支付',
-          amount: 30,
-          orderDate: '2023-06-10',
-          participants: 1,
-        },
-        {
-          id: 'order-2',
-          activity: {
-            id: '2',
-            title: '瑜伽入门体验课',
-            date: '2023-06-16',
-          },
-          status: '已取消',
-          amount: 50,
-          orderDate: '2023-06-08',
-          participants: 1,
-        },
-        {
-          id: 'order-3',
-          activity: {
-            id: '3',
-            title: '足球训练营',
-            date: '2023-06-17',
-          },
-          status: '已完成',
-          amount: 40,
-          orderDate: '2023-06-05',
-          participants: 2,
-        },
-      ];
-      
-      setOrders(mockOrders);
-      setLoading(false);
-    }, 800);
-    
-    return () => clearTimeout(timer);
-  }, [currentUser]);
+    fetchOrders(currentUser.id);
+  }, [currentUser, fetchOrders]);
    // 过滤订单
    const filteredOrders = orders.filter(order => {
-    /*if (filter === 'all') return true;*/
-    /*return order.status === filter;*/
+    if (filter === 'all') return true;
+    return order.status === filter;
   });
 
   // 统计数据
@@ -172,7 +127,11 @@ const OrdersPage = () => {
               <button
                 key={item.key}
                 onClick={() => setFilter(item.key)}
-                
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                  filter === item.key
+                    ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                    : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
+                }`}
               >
                 {item.label} ({item.count})
               </button>
@@ -188,10 +147,10 @@ const OrdersPage = () => {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                
+                {filter === 'all' ? '暂无订单' : `暂无${filter}订单`}
               </h3>
               <p className="text-gray-600 mb-8">
-                
+                {filter === 'all' ? '您还没有任何活动订单' : `暂时没有${filter}的订单`}
               </p>
               
             </div>

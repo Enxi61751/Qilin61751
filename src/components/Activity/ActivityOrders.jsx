@@ -1,16 +1,21 @@
 // ActivityOrders.jsx
 import React, { useState } from 'react';
+import { useOrder } from '@/context/OrderContext';
 
 const ActivityOrders = ({ orders }) => {
   const [cancellingOrderId, setCancellingOrderId] = useState(null);
+  const { cancelOrder } = useOrder();
 
   const handleCancel = async (orderId) => {
     setCancellingOrderId(orderId);
-    // 模拟API调用
-    setTimeout(() => {
-      setCancellingOrderId(null);
+    try {
+      await cancelOrder(orderId);
       alert('订单取消成功！');
-    }, 1000);
+    } catch (error) {
+      alert('订单取消失败，请重试');
+    } finally {
+      setCancellingOrderId(null);
+    }
   };
 
   const getStatusColor = (status) => {

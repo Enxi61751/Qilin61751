@@ -8,6 +8,7 @@ import ActivitiesPage from './pages/ActivitiesPage';
 import ActivityDetailPage from './pages/ActivityDetailPage';
 import OrdersPage from './pages/OrdersPage';
 import { ActivityProvider } from '@/context/ActivityContext'; 
+import { OrderProvider } from '@/context/OrderContext';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 
@@ -19,7 +20,8 @@ function App() {
 
   return (
     <ActivityProvider> {/* 新增 ActivityProvider */}
-      <Router>
+      <OrderProvider> {/* 新增 OrderProvider */}
+        <Router>
         <Routes>
           {/* 公开路由 */}
           <Route path="/login" element={!currentUser ? <Login /> : <Navigate to="/" />} />
@@ -50,7 +52,8 @@ function App() {
           {/* 404处理 */}
           <Route path="*" element={<h1>页面不存在</h1>} />
         </Routes>
-      </Router>
+        </Router>
+      </OrderProvider>
     </ActivityProvider> 
   );
 }
