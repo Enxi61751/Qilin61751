@@ -2,17 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import ActivityOrders from '@/components/Activity/ActivityOrders';
 import RealTimeDemo from '@/components/UI/RealTimeDemo';
-
 import { useOrder } from '@/context/OrderContext';
-
-
 
 const OrdersPage = () => {
   const { currentUser } = useAuth();
   const { orders, loading, fetchOrders } = useOrder();
   const [filter, setFilter] = useState('all');
-  /*const filteredOrders = getUserOrders(filter);
-  const orderStats = getOrderStats();*/
+
+  // Calculate order statistics
+  const orderStats = {
+    total: orders.length,
+    pending: orders.filter(order => order.status === '待支付').length,
+    paid: orders.filter(order => order.status === '已支付').length,
+    completed: orders.filter(order => order.status === '已完成').length,
+    cancelled: orders.filter(order => order.status === '已取消').length,
+  };
+
+  // Filter orders based on selected filter
+  const filteredOrders = filter === 'all' 
+    ? orders 
+    : orders.filter(order => order.status === filter);
+
+  // Fetch orders when component mounts or user changes
+  useEffect(() => {
+    if (currentUser) {
+      fetchOrders(currentUser.id);
+    }
+  }, [currentUser, fetchOrders]);
 
   if (!currentUser) {
     return (
@@ -102,12 +118,13 @@ const OrdersPage = () => {
       
        {/* 主要内容区域 */}
        <div className="container mx-auto px-4 py-8">
-        {/* 过滤器 */}
         {/* 实时演示组件 */}
         <RealTimeDemo />
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">订单筛选</h3>
-          <div className="flex flex-wrap gap-2">
+        
+        {/* 过滤器 */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-8">
+          <h3 className="text-xl font-bold text-gray-900 mb-6">订单筛选</h3>
+          <div className="flex flex-wrap gap-3">
             {[
               { key: 'all', label: '全部订单', count: orderStats.total },
               { key: '待支付', label: '待支付', count: orderStats.pending },
@@ -118,57 +135,61 @@ const OrdersPage = () => {
               <button
                 key={item.key}
                 onClick={() => setFilter(item.key)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`px-5 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
                   filter === item.key
-                    ? 'bg-blue-600 text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 scale-105'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:scale-105'
                 }`}
-                
               >
                 {item.label} ({item.count})
               </button>
             ))}
           </div>
         </div>
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          {filteredOrders.length === 0 ? (
-            <div className="p-12 text-center">
-              <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+
+        {/* 订单列表 */}
+        {filteredOrders.length === 0 ? (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-16 text-center">
+            <div className="mx-auto w-32 h-32 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mb-8">
+              <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
               {filter === 'all' ? '暂无订单' : `暂无${filter}订单`}
-                
-              </h3>
-              <p className="text-gray-600 mb-8">
-                
+            </h3>
+            <p className="text-gray-600 mb-8 max-w-md mx-auto">
               {filter === 'all' 
-                  ? '您还没有任何活动订单，快去参加活动吧！' 
-                  : `当前没有状态为"${filter}"的订单`
-                }
-              </p>
-              {filter === 'all' && (
-                <a 
-                  href="/activities" 
-                  className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                  浏览活动
-                </a>
-              )}
-              
-              
+                ? '您还没有任何活动订单，快去参加活动吧！' 
+                : `当前没有状态为"${filter}"的订单`
+              }
+            </p>
+            {filter === 'all' && (
+              <a 
+                href="/activities" 
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                浏览活动
+              </a>
+            )}
+          </div>
+        ) : (
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-gray-900">
+                {filter === 'all' ? '全部订单' : filter} 
+                <span className="text-gray-500 font-normal ml-2">({filteredOrders.length})</span>
+              </h2>
+              <div className="text-sm text-gray-500">
+                共 {filteredOrders.length} 个订单
+              </div>
             </div>
-          ) : (
-            <div className="p-6">
-              <ActivityOrders orders={filteredOrders} />
-            </div>
-          )}
-        </div>
+            <ActivityOrders orders={filteredOrders} />
+          </div>
+        )}
       </div>
     </div>
   );
