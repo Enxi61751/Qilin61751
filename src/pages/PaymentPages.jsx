@@ -9,7 +9,7 @@ const PaymentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { currentUser } = useAuth();
-  const { createOrder, payOrder, updateOrderStatus } = useOrders();
+  const { createOrder, payOrder, updateOrderStatus } = useOrder();
   
   const [paymentMethod, setPaymentMethod] = useState('alipay');
   const [loading, setLoading] = useState(false);

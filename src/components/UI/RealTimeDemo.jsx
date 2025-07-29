@@ -3,7 +3,7 @@ import { useOrder } from '../../context/OrderContext';
 import { useActivityContext } from '../../context/ActivityContext';
 
 const RealTimeDemo = () => {
-  const { createOrder, orders, getOrderStats } = useOrders();
+  const { createOrder, orders, getOrderStats } = useOrder();
   const { activities } = useActivityContext();
   const [isCreating, setIsCreating] = useState(false);
 

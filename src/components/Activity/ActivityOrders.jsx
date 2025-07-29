@@ -1,5 +1,6 @@
 // ActivityOrders.jsx
 import React, { useState } from 'react';
+import { useOrders } from '../../context/OrderContext';
 
 const ActivityOrders = ({ orders }) => {
   const { cancelOrder, payOrder, updateOrderStatus } = useOrders();

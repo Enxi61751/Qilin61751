@@ -9,10 +9,12 @@ import { useOrder } from '@/context/OrderContext';
 
 const OrdersPage = () => {
   const { currentUser } = useAuth();
-  const { orders, loading, fetchOrders } = useOrder();
+  const { orders, loading, fetchOrders, getOrderStats, getUserOrders } = useOrder();
   const [filter, setFilter] = useState('all');
-  /*const filteredOrders = getUserOrders(filter);
-  const orderStats = getOrderStats();*/
+
+  // 获取过滤后的订单和统计数据
+  const filteredOrders = getUserOrders(filter);
+  const orderStats = getOrderStats();
 
   if (!currentUser) {
     return (
