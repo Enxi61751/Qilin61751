@@ -1,79 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import ActivityOrders from '@/components/Activity/ActivityOrders';
+import RealTimeDemo from '@/components/UI/RealTimeDemo';
+
+import { useOrder } from '@/context/OrderContext';
 
 
 
 const OrdersPage = () => {
   const { currentUser } = useAuth();
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // 模拟获取用户订单
-  useEffect(() => {
-    if (!currentUser) return;
-
-    
-    // 模拟API调用
-    const timer = setTimeout(() => {
-      const mockOrders = [
-        {
-          id: 'order-1',
-          activity: {
-            id: '1',
-            title: '周末篮球友谊赛',
-            date: '2023-06-15',
-          },
-          status: '已支付',
-          amount: 30,
-          orderDate: '2023-06-10',
-          participants: 1,
-        },
-        {
-          id: 'order-2',
-          activity: {
-            id: '2',
-            title: '瑜伽入门体验课',
-            date: '2023-06-16',
-          },
-          status: '已取消',
-          amount: 50,
-          orderDate: '2023-06-08',
-          participants: 1,
-        },
-        {
-          id: 'order-3',
-          activity: {
-            id: '3',
-            title: '足球训练营',
-            date: '2023-06-17',
-          },
-          status: '已完成',
-          amount: 40,
-          orderDate: '2023-06-05',
-          participants: 2,
-        },
-      ];
-      
-      setOrders(mockOrders);
-      setLoading(false);
-    }, 800);
-    
-    return () => clearTimeout(timer);
-  }, [currentUser]);
-   // 过滤订单
-   const filteredOrders = orders.filter(order => {
-    /*if (filter === 'all') return true;*/
-    /*return order.status === filter;*/
-  });
-
-  // 统计数据
-  const orderStats = {
-    total: orders.length,
-    paid: orders.filter(o => o.status === '已支付').length,
-    completed: orders.filter(o => o.status === '已完成').length,
-    cancelled: orders.filter(o => o.status === '已取消').length,
-  };
+  const { orders, loading, fetchOrders } = useOrder();
+  const [filter, setFilter] = useState('all');
+  /*const filteredOrders = getUserOrders(filter);
+  const orderStats = getOrderStats();*/
 
   if (!currentUser) {
     return (
@@ -135,10 +74,14 @@ const OrdersPage = () => {
                 管理您的活动订单，追踪报名状态
               </p>
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6">
               <div className="bg-blue-50 rounded-lg p-4 text-center">
                 <div className="text-2xl font-bold text-blue-600">{orderStats.total}</div>
                 <div className="text-sm text-blue-700">总订单</div>
+              </div>
+              <div className="bg-orange-50 rounded-lg p-4 text-center">
+                <div className="text-2xl font-bold text-orange-600">{orderStats.pending}</div>
+                <div className="text-sm text-orange-700">待支付</div>
               </div>
               <div className="bg-yellow-50 rounded-lg p-4 text-center">
                 <div className="text-2xl font-bold text-yellow-600">{orderStats.paid}</div>
@@ -160,11 +103,14 @@ const OrdersPage = () => {
        {/* 主要内容区域 */}
        <div className="container mx-auto px-4 py-8">
         {/* 过滤器 */}
+        {/* 实时演示组件 */}
+        <RealTimeDemo />
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">订单筛选</h3>
           <div className="flex flex-wrap gap-2">
             {[
               { key: 'all', label: '全部订单', count: orderStats.total },
+              { key: '待支付', label: '待支付', count: orderStats.pending },
               { key: '已支付', label: '已支付', count: orderStats.paid },
               { key: '已完成', label: '已完成', count: orderStats.completed },
               { key: '已取消', label: '已取消', count: orderStats.cancelled },
@@ -172,6 +118,11 @@ const OrdersPage = () => {
               <button
                 key={item.key}
                 onClick={() => setFilter(item.key)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  filter === item.key
+                    ? 'bg-blue-600 text-white shadow-lg'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
                 
               >
                 {item.label} ({item.count})
@@ -188,11 +139,28 @@ const OrdersPage = () => {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              {filter === 'all' ? '暂无订单' : `暂无${filter}订单`}
                 
               </h3>
               <p className="text-gray-600 mb-8">
                 
+              {filter === 'all' 
+                  ? '您还没有任何活动订单，快去参加活动吧！' 
+                  : `当前没有状态为"${filter}"的订单`
+                }
               </p>
+              {filter === 'all' && (
+                <a 
+                  href="/activities" 
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  浏览活动
+                </a>
+              )}
+              
               
             </div>
           ) : (
