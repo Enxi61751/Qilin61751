@@ -1,8 +1,8 @@
 import React from 'react';
-import { useOrders } from '../../context/OrderContext';
+import { useOrder } from '../../context/OrderContext';
 
 const NotificationCenter = () => {
-  const { notifications, clearNotification, clearAllNotifications } = useOrders();
+  const { notifications, clearNotification, clearAllNotifications } = useOrder();
 
   if (notifications.length === 0) return null;
 

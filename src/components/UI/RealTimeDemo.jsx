@@ -3,9 +3,11 @@ import { useOrder } from '../../context/OrderContext';
 import { useActivityContext } from '../../context/ActivityContext';
 
 const RealTimeDemo = () => {
-  const { createOrder, orders, getOrderStats } = useOrders();
+  const { createOrder, orders, getOrderStats } = useOrder();
   const { activities } = useActivityContext();
   const [isCreating, setIsCreating] = useState(false);
+ 
+
 
   const createDemoOrder = async () => {
     if (activities.length === 0) return;
@@ -33,10 +35,8 @@ const RealTimeDemo = () => {
 
   const stats = getOrderStats();
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 m-4">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">
-        实时订单系统演示
-      </h3>
+    <div className="OrdersPage">
+      
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div className="bg-blue-50 rounded-lg p-3 text-center">
@@ -75,22 +75,11 @@ const RealTimeDemo = () => {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
-              <span>创建演示订单</span>
+              
             </>
           )}
         </button>
-        <div className="bg-gray-50 rounded-lg p-4">
-          <h4 className="font-medium text-gray-900 mb-2">实时更新功能说明：</h4>
-          <ul className="text-sm text-gray-600 space-y-1">
-            <li>• 订单状态会自动更新（每10秒检查一次）</li>
-            <li>• 支付超时订单自动取消</li>
-            <li>• 活动结束后订单自动标记为已完成</li>
-            <li>• 模拟随机状态变化（每30秒）</li>
-            <li>• 实时通知提醒订单状态变化</li>
-            <li>• 页面数据实时同步更新</li>
-          </ul>
-        </div>
-
+        
         {orders.length > 0 && (
           <div className="bg-yellow-50 rounded-lg p-4">
             <h4 className="font-medium text-yellow-800 mb-2">最新订单：</h4>

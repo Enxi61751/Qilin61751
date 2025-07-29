@@ -1,8 +1,9 @@
 // ActivityOrders.jsx
 import React, { useState } from 'react';
+import { useOrder } from '../../context/OrderContext';
 
 const ActivityOrders = ({ orders }) => {
-  const { cancelOrder, payOrder, updateOrderStatus } = useOrders();
+  const { cancelOrder, payOrder, updateOrderStatus } = useOrder();
   const [processingOrders, setProcessingOrders] = useState({});
 
   const handleCancel = async (orderId) => {
@@ -113,7 +114,7 @@ const ActivityOrders = ({ orders }) => {
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {order.activity.title}
+                  
                 </h3>
                 <div className="flex items-center space-x-4 text-sm text-gray-600">
                   <div className="flex items-center">

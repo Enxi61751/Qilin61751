@@ -12,11 +12,66 @@ export const useOrder = () => {
   }
   return context;
 };
+// 添加useOrders hook作为useOrder的别名
+export const useOrders = () => {
+  return useOrder();
+};
 
 export const OrderProvider = ({ children }) => {
   const { currentUser } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [notifications, setNotifications] = useState([]);
+
+  // 添加通知功能
+  const addNotification = useCallback((title, message, type = 'info') => {
+    const notification = {
+      id: `notification-${Date.now()}`,
+      title,
+      message,
+      type,
+      timestamp: Date.now()
+    };
+    setNotifications(prev => [notification, ...prev.slice(0, 9)]); // 最多保留10条通知
+  }, []);
+
+  const clearNotification = useCallback((notificationId) => {
+    setNotifications(prev => prev.filter(n => n.id !== notificationId));
+  }, []);
+
+  const clearAllNotifications = useCallback(() => {
+    setNotifications([]);
+  }, []);
+
+  // 添加useEffect来在用户登录时自动获取订单
+  useEffect(() => {
+    if (currentUser) {
+      fetchOrders(currentUser.id);
+    } else {
+      setOrders([]);
+      setLoading(false);
+    }
+  }, [currentUser]);
+  // 获取订单统计
+  const getOrderStats = useCallback(() => {
+    const stats = {
+      total: orders.length,
+      pending: orders.filter(order => order.status === '待支付').length,
+      paid: orders.filter(order => order.status === '已支付').length,
+      completed: orders.filter(order => order.status === '已完成').length,
+      cancelled: orders.filter(order => order.status === '已取消').length,
+    };
+    return stats;
+  }, [orders]);
+
+  // 根据状态筛选订单
+  const getUserOrders = useCallback((filter = 'all') => {
+    if (filter === 'all') {
+      return orders;
+    }
+    return orders.filter(order => order.status === filter);
+  }, [orders]);
 
 
   const updateOrderStatuses = useCallback(async (orderIds, newStatus) => {
@@ -110,12 +165,41 @@ export const OrderProvider = ({ children }) => {
         id: `order-${Date.now()}`,
         ...orderData,
         orderDate: new Date().toISOString().split('T')[0],
+        createdAt: new Date().toISOString().split('T')[0],
         status: '已支付'
       };
       setOrders(prevOrders => [...prevOrders, newOrder]);
       return newOrder;
     } catch (err) {
       setError(err.message || '创建订单失败');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+  // 支付订单
+  const payOrder = useCallback(async (orderId, paymentData) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // 模拟 API 调用
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      setOrders(prevOrders => 
+        prevOrders.map(order => 
+          order.id === orderId 
+            ? { 
+                ...order, 
+                status: '已支付',
+                paidAt: new Date().toISOString().split('T')[0],
+                paymentMethod: paymentData?.paymentMethod
+              }
+            : order
+        )
+      );
+    } catch (err) {
+      setError(err.message || '支付失败');
       throw err;
     } finally {
       setLoading(false);
@@ -134,7 +218,12 @@ export const OrderProvider = ({ children }) => {
       setOrders(prevOrders => 
         prevOrders.map(order => 
           order.id === orderId 
-            ? { ...order, status: '已取消' }
+          ? { 
+            ...order, 
+            status: '已取消',
+            cancelledAt: new Date().toISOString().split('T')[0],
+            cancelReason: '用户取消'
+          }
             : order
         )
       );
@@ -145,16 +234,53 @@ export const OrderProvider = ({ children }) => {
       setLoading(false);
     }
   }, []);
+   // 更新订单状态
+   const updateOrderStatus = useCallback(async (orderId, newStatus, extraData = {}) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // 模拟 API 调用
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setOrders(prevOrders => 
+        prevOrders.map(order => 
+          order.id === orderId 
+            ? { 
+                ...order, 
+                status: newStatus,
+                ...extraData,
+                [`${newStatus === '已完成' ? 'completed' : newStatus === '已取消' ? 'cancelled' : 'updated'}At`]: new Date().toISOString().split('T')[0]
+              }
+            : order
+        )
+      );
+    } catch (err) {
+      setError(err.message || '更新订单状态失败');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
   // Context 值
   const contextValue = {
     orders,
     loading,
-    /*error,*/
+    error,
     updateOrderStatuses,
     fetchOrders,
     createOrder,
     cancelOrder,
     /*setError*/
+    payOrder,
+    updateOrderStatus,
+    getOrderStats,
+    getUserOrders,
+    setError,
+    notifications,
+    addNotification,
+    clearNotification,
+    clearAllNotifications
   };
 
   return (

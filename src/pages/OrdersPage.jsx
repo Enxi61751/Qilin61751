@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import ActivityOrders from '@/components/Activity/ActivityOrders';
 import RealTimeDemo from '@/components/UI/RealTimeDemo';
-
 import { useOrder } from '@/context/OrderContext';
 
 
 
 const OrdersPage = () => {
   const { currentUser } = useAuth();
-  const { orders, loading, fetchOrders } = useOrder();
+  const { getUserOrders, getOrderStats, loading } = useOrder();
   const [filter, setFilter] = useState('all');
-  /*const filteredOrders = getUserOrders(filter);
-  const orderStats = getOrderStats();*/
+  // 获取过滤后的订单和统计数据
+  const filteredOrders = getUserOrders(filter);
+  const orderStats = getOrderStats();
 
   if (!currentUser) {
     return (
@@ -63,7 +63,7 @@ const OrdersPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="OrdersPage">
       {/* 页面头部 */}
       <div className="bg-white border-b border-gray-200">
         <div className="container mx-auto px-4 py-8">
@@ -104,7 +104,7 @@ const OrdersPage = () => {
        <div className="container mx-auto px-4 py-8">
         {/* 过滤器 */}
         {/* 实时演示组件 */}
-        <RealTimeDemo />
+        {/*<RealTimeDemo />*/}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">订单筛选</h3>
           <div className="flex flex-wrap gap-2">
